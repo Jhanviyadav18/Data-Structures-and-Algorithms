@@ -13,24 +13,41 @@ class Node1{
         this.next = next;
     }
 }
-public class ReverseAlinkedList {
+//public class ReverseAlinkedList {
     //with extra space TC = O(n), SC = O(n)
     //Stack methode
-    public ListNode reverseWithStack(ListNode head){
-        Stack<Integer> valueStack = new Stack<>();
-        while (head != null){
-            valueStack.push(head.val);
-            head = head.next;
-        }
-        ListNode reverseList = new ListNode(Integer.MIN_VALUE);
-        ListNode ptr = reverseList;
-        while (!valueStack.isEmpty()){
-            ptr.next = new ListNode(valueStack.pop());
-            ptr = ptr.next;
-        }
-        return reverseList;
-    }
+//    public ListNode reverseWithStack(ListNode head){
+//        Stack<Integer> valueStack = new Stack<>();
+//        while (head != null){
+//            valueStack.push(head.val);
+//            head = head.next;
+//        }
+//        ListNode reverseList = new ListNode(Integer.MIN_VALUE);
+//        ListNode ptr = reverseList;
+//        while (!valueStack.isEmpty()){
+//            ptr.next = new ListNode(valueStack.pop());
+//            ptr = ptr.next;
+//        }
+//        return reverseList;
+//    }
 
+//WITHOUT USING EXTRA SPACE
+public class ReverseAlinkedList {
+    public ListNode reverseWithoutExtraSpace(ListNode head){
+        if (head == null) return null;
+        if (head.next == null) return head;
+
+        ListNode preNode = null;
+        ListNode currNode = head;
+        while (currNode != null){
+            ListNode nextNode = currNode.next;
+            currNode.next = preNode;
+            preNode = currNode;
+            currNode = nextNode;
+        }
+        head = preNode;
+        return head;
+}
     public void printList(ListNode head){
         while (head != null){
             System.out.print(head.val);
@@ -49,7 +66,11 @@ public class ReverseAlinkedList {
         System.out.print("ORIGINAL LIST: ");
         obj.printList(x);
 
-        ListNode reversed = obj.reverseWithStack(x);
+//        ListNode reversed = obj.reverseWithStack(x);
+//        System.out.print("REVERSED LIST: ");
+//        obj.printList(reversed);
+
+        ListNode reversed = obj.reverseWithoutExtraSpace(x);
         System.out.print("REVERSED LIST: ");
         obj.printList(reversed);
     }
